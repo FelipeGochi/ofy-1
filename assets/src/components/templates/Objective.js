@@ -1,5 +1,4 @@
 import { useTheme } from "@material-ui/core";
-import { formatDistance } from "date-fns";
 import React, { Fragment, useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
 import { convert, daysFromToday, getDifficulty, isNull } from "../../helpers/functions";

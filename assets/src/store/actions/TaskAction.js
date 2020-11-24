@@ -121,8 +121,6 @@ export const create = (data) => {
 
         const service = WithHttpRequest(['task'])
 
-        console.log(data)
-
         const response = await service.task.create(data)
         const responseData = response.data
 

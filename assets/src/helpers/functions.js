@@ -1,4 +1,4 @@
-import { addDays, format, formatDistance, isBefore } from 'date-fns'
+import { addDays, format, formatDistance, isBefore, subDays } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 
 const locales = { ptBR }
@@ -23,6 +23,10 @@ export const getToday = () => {
     return convert(new Date())
 }
 
+export const isBeforeToday = (date) => {
+    return isBefore(date, subDays(new Date(), 1))
+}
+
 export const isNull = (item) => item === null
 export const isNotNull = (item) => item !== null
 export const isEmpty = (item) => item.length === 0 || !item
@@ -37,4 +41,25 @@ export const getDifficulty = (dateObjective) => {
     if (lessThenDays(dateObjective, 240))
         return { text: 'Fácil', value: 'F' }
     return { text: 'Super Fácil', value: 'S' }
+}
+
+export const lazyLoadScrollChecker = () => {
+    const _configuration = {
+        windowHeight: window.innerHeight,
+        fullPageHeight: document.documentElement.scrollHeight,
+        scrollTop: window.pageYOffset
+    }
+
+    const _calcCurrentScrollPosition = () => _configuration.fullPageHeight - _configuration.scrollTop
+
+    const _checkScreenCoords = () => {
+        const { windowHeight, fullPageHeight, scrollTop } = _configuration
+
+        return {
+            isBottomHitOnScroll: _calcCurrentScrollPosition() + scrollTop === fullPageHeight,
+            isBottomHitOnInitView: windowHeight === fullPageHeight
+        }
+    }
+
+    return _checkScreenCoords()
 }

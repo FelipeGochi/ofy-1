@@ -93,11 +93,13 @@ const Crust = (props) => {
     ]
 
     useEffect(() => {
+        const regex = new RegExp('/', 'g');
+
         const index = menuProps
-            .findIndex(menuProp => menuProp.id === pathname.replaceAll('/', ''))
+            .findIndex(menuProp => menuProp.id === pathname.replace(regex, ''))
         setOpen(matches)
         setPage(index >= 0 ? index : 0)
-    }, [matches])
+    }, [matches, pathname])
 
     const toggleDrawer = (open) => (event) => {
         if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -111,7 +113,8 @@ const Crust = (props) => {
         <Fragment>
             <Header
                 onClickMenuButton={matches && toggleDrawer(open)}
-                className={classes.basePage__AppBar} position="fixed" />
+                className={classes.basePage__AppBar} position="fixed"
+                isDesktop={matches} />
             {matches ?
                 (<Fragment>
                     <div className={classes.root}>

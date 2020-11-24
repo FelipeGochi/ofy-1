@@ -122,7 +122,7 @@ const LoginForm = (props) => {
             <Col>
                 <Box>
                     <GoogleLogin
-                        clientId={'1037423118933-g5fs8p63tekgc6t35m4n00pca0a65ve2.apps.googleusercontent.com'}
+                        clientId={'1041807202564-2bp54i0c8hfp9imulpji8fp29fs7iu3m.apps.googleusercontent.com'}
                         buttonText='Entre com o Google!'
                         onSuccess={login}
                         onFailure={loginFailure}

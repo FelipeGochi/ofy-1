@@ -1,11 +1,22 @@
+from datetime import datetime
 from rest_framework import status
 from rest_framework.response import Response
 from djangoRestPattern import errors as er
 from djangoRestPattern import variables as var
 from djangoRestPattern.settings import EMAIL_HOST_USER
 from django.core.mail import send_mail
+from datetime import datetime
 import string
 import random
+
+
+class Date:
+    def __init__(self, date):
+        self.date = date
+
+    def parse(self):
+        return datetime.strptime(
+            self.date, "%Y-%m-%d").strftime("%Y/%m/%d")
 
 
 class TokenGenerator:

@@ -1,5 +1,5 @@
 import { TextField } from "@material-ui/core";
-import { DatePicker } from "@material-ui/pickers";
+import { KeyboardDatePicker } from "@material-ui/pickers";
 import React from "react";
 
 const InputText = (props) => (
@@ -33,7 +33,7 @@ const InputDate = (props) => {
     };
 
     return (
-        <DatePicker
+        <KeyboardDatePicker
             {...inputProps}
             {...others}
             inputVariant="outlined"

@@ -2,10 +2,10 @@ import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { Field, formValueSelector, reduxForm } from "redux-form";
-import { convert, getDifficulty, lessThenDays } from "../../helpers/functions";
+import { convert, getDifficulty, isBeforeToday, lessThenDays } from "../../helpers/functions";
 import { WithStore } from "../../store";
 import { create, update } from "../../store/actions/ObjectiveAction";
-import { Box, Button, Col, Container, Form, InputText, Paper, Row, Text } from "../atoms";
+import { Box, Button, Col, Container, Form, InputText, Row, Text } from "../atoms";
 import { InputDate } from "../atoms/Form/Input";
 import { AlertWrapper } from "../molecules";
 
@@ -42,6 +42,9 @@ const ObjectiveForm = (props) => {
   const dateObjective = new Date(props.dateObjective)
 
   const submit = async (values) => {
+
+    if (isBeforeToday(new Date(values.dateObjective)))
+      return;
 
     const data = {
       "objective": values.objective,

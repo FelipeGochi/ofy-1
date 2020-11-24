@@ -8,7 +8,8 @@ import {
     OBJECTIVE_REQUEST_COMPLETE,
     OBJECTIVE_REQUEST_ERROR,
     OBJECTIVE_SET,
-    OBJECTIVE_LIST_SET
+    OBJECTIVE_LIST_SET,
+    OBJECTIVE_SET_PAGE
 } from "./Actions.type";
 import { setList as setGoalList } from './GoalAction'
 import { setList as setTaskList } from './TaskAction'
@@ -56,17 +57,18 @@ const requestError = (error) => ({
 
 export const list = () => {
     return async (dispatch, getState) => {
-        dispatch(request())
+        if (isNotEmpty(getState().objective.list) &&
+            getState().objective.list.length === getState().objective.total) return
 
-        if (isNotEmpty(getState().objective.list)) return;
+        dispatch(request())
 
         const service = WithHttpRequest(['objective'])
 
-        const response = await service.objective.list()
+        const response = await service.objective.list(getState().objective.page)
         const responseData = response.data
 
         if (response.status == 200) {
-            dispatch(setList(responseData))
+            dispatch(setList(responseData, getState().objective.list))
         } else {
             dispatch(requestError(responseData))
         }
@@ -96,12 +98,16 @@ export const getObjective = (id) => {
     }
 }
 
-export const setList = ({ objectives }) => {
+export const setList = ({ objectives, count, next }, currentList) => {
+    const list = Array.from(new Set([...currentList, ...objectives]
+        .map(JSON.stringify)))
+        .map(JSON.parse)
+
     return ({
         type: OBJECTIVE_LIST_SET,
-        objectives: objectives.sort((objectiveCurrent, objectiveNext) => {
-            return new Date(objectiveCurrent.dateObjective) - new Date(objectiveNext.dateObjective);
-        })
+        objectives: list,
+        total: count || list.length,
+        next: next || 1
     })
 }
 
@@ -123,8 +129,8 @@ export const create = (data) => {
 
         if (response.status == 200) {
             dispatch(setList({
-                objectives: [...getState().objective.list, responseData.objective]
-            }))
+                objectives: [responseData.objective]
+            }, getState().objective.list))
             dispatch(requestComplete(responseData))
             return responseData.objective
         } else {
@@ -147,8 +153,8 @@ export const update = (data) => {
             dispatch(requestComplete(responseData))
             dispatch(setObjective(responseData))
             dispatch(setList({
-                objectives: [...getState().objective.list.filter(it => it.id !== responseData.objective.id), responseData.objective]
-            }))
+                objectives: [responseData.objective]
+            }, getState().objective.list.filter(it => it.id !== responseData.objective.id)))
             return responseData.objective
         } else {
             dispatch(requestError(responseData))
@@ -169,14 +175,22 @@ export const done = (data) => {
             dispatch(requestComplete(responseData))
             dispatch(setObjective(responseData))
             dispatch(setList({
-                objectives: [...getState().objective.list.filter(it => it.id !== responseData.objective.id), responseData.objective]
-            }))
-            dispatch(setGoalList({
-                goals: [...getState().goal.list.filter(it => it['objective_id'] === responseData.objective.id).map(task => { task.done = true; return task })]
-            }))
-            dispatch(setTaskList({
-                tasks: [...getState().goal.list.map(goal => getState().task.list.filter(it => it['goal_id'] === goal.id).map(task => { task.done = true; return task }))]
-            }))
+                objectives: [responseData.objective]
+            }, getState().objective.list.filter(it => it.id !== responseData.objective.id)))
+
+            isNotEmpty(getState().goal.list)
+                && dispatch(setGoalList({
+                    goals: [...getState().goal.list.filter(it => it['objective_id'] === responseData.objective.id)
+                        .map(goal => { goal.done = true; return goal })]
+                }, []))
+
+            isNotEmpty(getState().goal.list)
+                && isNotEmpty(getState().task.list)
+                && dispatch(setTaskList({
+                    tasks: [...getState().goal.list.map(goal => getState().task.list
+                        .filter(it => it['goal_id'] === goal.id)
+                        .map(task => { task.done = true; return task }))]
+                }))
             return responseData.objective
         } else {
             dispatch(requestError(responseData))
@@ -197,7 +211,7 @@ export const remove = (id) => {
             dispatch(setList({
                 objectives: getState().objective.list
                     .filter(it => parseInt(it.id) !== parseInt(id))
-            }))
+            }, []))
             dispatch(requestComplete({}))
             return true
         } else {

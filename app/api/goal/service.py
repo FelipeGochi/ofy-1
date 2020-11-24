@@ -8,6 +8,7 @@ from djangoRestPattern import functions as fn
 from djangoRestPattern import variables as var
 from djangoRestPattern import errors as er
 from django.conf import settings
+from django.core.paginator import Paginator
 
 
 class GoalService:
@@ -15,14 +16,29 @@ class GoalService:
         self.request = request
 
     def list(self, idObjective):
+        page = int(fn.Http(
+            self.request).get_query_param('page'))
+
         goals = Goal.objects.filter(
-            objective__id=idObjective, isActive=True)
+            objective__id=idObjective,
+            isActive=True).order_by('done',
+                                    'dateGoal',
+                                    'goal',)
+
+        paginator = Paginator(goals, 5, allow_empty_first_page=True)
+
+        try:
+            next = paginator.page(page).next_page_number()
+        except:
+            next = 0
 
         goalsDTO = list(map(lambda goal:
                             GoalSerializer(goal).data,
-                            goals))
+                            paginator.get_page(page).object_list))
 
         return Response({
+            'count': paginator.count,
+            'next': next,
             'goals': goalsDTO
         })
 
@@ -89,7 +105,7 @@ class GoalService:
 
     def __create_goal(self, idObjective, goal, dateGoal):
         try:
-            goal = Goal.objects.create(
+            new_goal = Goal.objects.create(
                 objective_id=idObjective,
                 goal=goal,
                 dateGoal=dateGoal)
@@ -106,8 +122,10 @@ class GoalService:
                 error['title']
             )
 
+        new_goal.dateGoal = fn.Date(new_goal.dateGoal).parse()
+
         return Response(data={
-            'goal': GoalSerializer(goal).data
+            'goal': GoalSerializer(new_goal).data
         })
 
     def __update_goal(self, idObjective, id, goal, dateGoal, description):
@@ -132,6 +150,8 @@ class GoalService:
                 error['title']
             )
 
+        goal_old.dateGoal = fn.Date(goal_old.dateGoal).parse()
+
         return Response(data={
             'goal': GoalSerializer(goal_old).data
         })
@@ -152,6 +172,8 @@ class GoalService:
                 error['severity'],
                 error['title']
             )
+
+        goal.dateGoal = goal.dateGoal.strftime("%Y/%m/%d")
 
         return Response(data={
             'goal': GoalSerializer(goal).data

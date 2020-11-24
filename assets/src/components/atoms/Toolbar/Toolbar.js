@@ -9,6 +9,7 @@ const Toolbar = (props) => (
         component={props.component}
         disableGutters={props.disableGutters}
         variant={props.variant}
+        style={props.style}
     >
         {props.children}
     </ToolbarMaterialUI>

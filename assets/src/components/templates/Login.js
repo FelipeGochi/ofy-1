@@ -1,14 +1,14 @@
 import { makeStyles } from "@material-ui/core";
 import React from "react";
-import { Col, Container, Row } from "../atoms";
-import { AlertWrapper } from "../molecules";
-import { LoginForm } from "../organisms";
 import { WithStore } from "../../store";
 import {
     cleanLoginAlert,
     login,
     loginSocialMedia
 } from "../../store/actions/AuthAction";
+import { Col, Container, Image, Row } from "../atoms";
+import { AlertWrapper } from "../molecules";
+import { LoginForm } from "../organisms";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -43,6 +43,7 @@ const Login = (props) => {
 
     return (
         <Container fixed={true} className={classes.root}>
+            <Image name={"logo"} alt={"Objectivefy - OFY"} style={{marginTop: "-90px", marginBottom: "-60px"}} />
             <AlertWrapper data={auth} />
             <Row className={classes.form}>
                 <Col>

@@ -55,24 +55,25 @@ const requestError = (error) => ({
 
 export const list = (idObjective) => {
     return async (dispatch, getState) => {
+        const isSameObjective = getState().objective.current.id == idObjective
+
+        if (isNotEmpty(getState().goal.list)
+            && getState().goal.list.length === getState().goal.total
+            && isSameObjective) return
+
+        if (getState().goal.page == 0 && isSameObjective) return
+
         dispatch(request())
 
         const service = WithHttpRequest(['goal'])
+        const response = await service.goal.list(idObjective, isSameObjective ? getState().goal.page : 1)
+        const responseData = response.data
 
-        const goalList = getState().goal.list.filter(goal => goal['objective_id'] === parseInt(idObjective))
-
-        if (isNotEmpty(goalList)) { dispatch(setList({ goals: goalList })) }
-        else {
-            const response = await service.goal.list(idObjective)
-            const responseData = response.data
-
-            if (response.status == 200) {
-                dispatch(setList(responseData))
-            } else {
-                dispatch(requestError(responseData))
-            }
+        if (response.status == 200) {
+            dispatch(setList(responseData, isSameObjective ? getState().goal.list : []))
+        } else {
+            dispatch(requestError(responseData))
         }
-
     }
 }
 
@@ -99,13 +100,16 @@ export const getGoal = (idObjective, id) => {
     }
 }
 
-export const setList = ({ goals }) => {
+export const setList = ({ goals, count, next }, currentList = []) => {
+    const list = Array.from(new Set([...currentList, ...goals]
+        .map(JSON.stringify)))
+        .map(JSON.parse)
+
     return ({
         type: GOAL_LIST_SET,
-        // goals: goals.sort((goalCurrent, goalNext) => {
-        //     return new Date(goalCurrent.dateGoal) - new Date(goalNext.dateGoal);
-        // })
-        goals: goals
+        goals: list,
+        total: count || list.length,
+        next: next == 0 ? 0 : (next || 1)
     })
 }
 
@@ -127,8 +131,8 @@ export const create = (data) => {
 
         if (response.status == 200) {
             dispatch(setList({
-                goals: [...getState().goal.list, responseData.goal]
-            }))
+                goals: [responseData.goal]
+            }, getState().goal.list))
             dispatch(requestComplete(responseData))
             return responseData.goal
         } else {
@@ -151,8 +155,8 @@ export const update = (data) => {
             dispatch(requestComplete(responseData))
             dispatch(setGoal(responseData))
             dispatch(setList({
-                goals: [...getState().goal.list.filter(it => it.id !== responseData.goal.id), responseData.goal]
-            }))
+                goals: [responseData.goal]
+            }, getState().goal.list.filter(it => it.id !== responseData.goal.id)))
             return responseData.goal
         } else {
             dispatch(requestError(responseData))
@@ -172,12 +176,15 @@ export const done = (data) => {
         if (response.status == 200) {
             dispatch(requestComplete(responseData))
             dispatch(setGoal(responseData))
+
             dispatch(setList({
-                goals: [...getState().goal.list.filter(it => it.id !== responseData.goal.id), responseData.goal]
-            }))
-            dispatch(setTaskList({
-                tasks: [...getState().task.list.filter(it => it['goal_id'] === responseData.goal.id).map(task => { task.done = true; return task })]
-            }))
+                goals: [responseData.goal]
+            }, getState().goal.list.filter(it => it.id !== responseData.goal.id)))
+
+            isNotEmpty(getState().task.list)
+                && dispatch(setTaskList({
+                    tasks: [...getState().task.list.filter(it => it['goal_id'] === responseData.goal.id).map(task => { task.done = true; return task })]
+                }))
             return responseData.goal
         } else {
             dispatch(requestError(responseData))

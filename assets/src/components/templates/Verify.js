@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core";
 import React, { useEffect } from "react";
 import { withRouter } from "react-router-dom";
-import { Col, Container, Row, Text } from "../atoms";
+import { Col, Container, Image, Row, Text, Toolbar } from "../atoms";
 import { AlertWrapper, Header } from "../molecules";
 import { WithStore } from "../../store";
 import { cleanUserAlert, verify } from "../../store/actions/UserAction";
@@ -38,6 +38,8 @@ const Verify = (props) => {
                 position="fixed"
                 backPage />
             <Row direction='column'>
+                <Toolbar />
+                <Image name={"logo"} alt={"Objectivefy - OFY"} style={{marginTop: "-90px", marginBottom: "-60px"}} />
                 <AlertWrapper data={user} />
             </Row>
         </Container>

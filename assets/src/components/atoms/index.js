@@ -5,6 +5,7 @@ import Badge from './Badge/Badge'
 import Baseline from './Baseline/Baseline'
 import Box from './Container/Box'
 import Button from './buttons/Button'
+import Chip from './Chip/Chip'
 import Col from './Container/Col'
 import Container from './Container/Container'
 import Divider from './Divider/Divider'
@@ -12,6 +13,7 @@ import FloatButton from './buttons/FloatButton'
 import Form from './Form/Form'
 import Icon from './Icon/Icon'
 import IconButton from './buttons/IconButton'
+import Image from './Image/Image'
 import { InputText } from './Form/Input'
 import List from './List/List'
 import ListItem from './List/ListItem'
@@ -33,6 +35,7 @@ export {
     Baseline,
     Box,
     Button,
+    Chip,
     Col,
     Container,
     Divider,
@@ -40,6 +43,7 @@ export {
     Form,
     Icon,
     IconButton,
+    Image,
     InputText,
     List,
     ListItem,

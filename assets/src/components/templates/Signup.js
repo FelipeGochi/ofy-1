@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core";
 import React from "react";
 import { withRouter } from "react-router-dom";
-import { Col, Container, Row } from "../atoms";
+import { Col, Container, Image, Row, Toolbar } from "../atoms";
 import { AlertWrapper, Header } from "../molecules";
 import { SignupForm } from "../organisms/";
 import { WithStore } from "../../store";
@@ -43,6 +43,8 @@ const Signup = (props) => {
                 position="fixed"
                 backPage />
             <Row direction='column'>
+                <Toolbar />
+                <Image name={"logo"} alt={"Objectivefy - OFY"} style={{marginTop: "-90px", marginBottom: "-60px"}} />
                 <AlertWrapper data={user} />
                 <Col className={classes.form}>
                     <SignupForm

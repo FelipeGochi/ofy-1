@@ -2,9 +2,9 @@ import { API_PATH, OBJECTIVE_PATH } from './paths';
 import PrivateService from './Private';
 
 export default class ObjectiveService extends PrivateService {
-  async list() {
+  async list(page) {
     try {
-      return await this.httpService.get(`${API_PATH}/${OBJECTIVE_PATH}/`, this.headers())
+      return await this.httpService.get(`${API_PATH}/${OBJECTIVE_PATH}/?page=${page}`, this.headers())
     } catch (error) {
       return error.response
     }
@@ -12,7 +12,7 @@ export default class ObjectiveService extends PrivateService {
 
   async get(id) {
     try {
-      return await this.httpService.get(`${API_PATH}/${OBJECTIVE_PATH}/${id}`, this.headers())
+      return await this.httpService.get(`${API_PATH}/${OBJECTIVE_PATH}/${id}/`, this.headers())
     } catch (error) {
       return error.response
     }
@@ -52,7 +52,7 @@ export default class ObjectiveService extends PrivateService {
 
   async remove(id) {
     try {
-      return await this.httpService.delete(`${API_PATH}/${OBJECTIVE_PATH}/${id}`, this.headers())
+      return await this.httpService.delete(`${API_PATH}/${OBJECTIVE_PATH}/${id}/`, this.headers())
     } catch (error) {
       return error.response
     }

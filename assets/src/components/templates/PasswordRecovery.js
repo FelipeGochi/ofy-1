@@ -1,11 +1,11 @@
 import { makeStyles } from "@material-ui/core";
-import React, { Fragment } from "react";
+import React from "react";
 import { withRouter } from "react-router-dom";
-import { Box, Col, Container, Row, Text } from "../atoms";
-import { AlertWrapper, Header } from "../molecules";
-import { PasswordRecoveryForm } from "../organisms";
 import { WithStore } from "../../store";
 import { cleanUserAlert, passwordRecovery } from "../../store/actions/UserAction";
+import { Col, Container, Image, Row, Text, Toolbar } from "../atoms";
+import { AlertWrapper, Header } from "../molecules";
+import { PasswordRecoveryForm } from "../organisms";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,6 +38,8 @@ const PasswordRecovery = (props) => {
         position="fixed"
         backPage />
       <Row direction='column'>
+        <Toolbar />
+        <Image name={"logo"} alt={"Objectivefy - OFY"} style={{marginTop: "-90px", marginBottom: "-60px"}} />
         <AlertWrapper data={user} />
         <Col className={classes.form}>
           <Text align={'center'} variant="h5" component="h1" gutterBottom>

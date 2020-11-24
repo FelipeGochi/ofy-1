@@ -4,7 +4,8 @@ import {
     OBJECTIVE_REQUEST_ERROR,
     OBJECTIVE_CLEAN_ALERT,
     OBJECTIVE_SET,
-    OBJECTIVE_LIST_SET
+    OBJECTIVE_LIST_SET,
+    OBJECTIVE_SET_PAGE
 } from "../actions/Actions.type"
 
 const initialState = {
@@ -12,6 +13,8 @@ const initialState = {
     error: null,
     success: null,
     current: null,
+    page: 1,
+    total: 0,
     list: []
 }
 
@@ -32,6 +35,8 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 list: action.objectives,
+                page: action.next,
+                total: action.total,
                 loading: false
             }
         case OBJECTIVE_REQUEST_COMPLETE:
@@ -50,6 +55,11 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 ...action
+            }
+        case OBJECTIVE_SET_PAGE:
+            return {
+                ...state,
+                page: action.page,
             }
         default:
             return state

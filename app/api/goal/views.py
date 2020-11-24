@@ -1,11 +1,14 @@
 from rest_framework.views import APIView
 
 from . import service
+from . import serializers
 
 
 # Create your views here.
 
 class GenericView(APIView):
+    serializer_class = serializers.GoalSerializer
+
     def get(self, request, idObjective, *args, **kwargs):
         return service.GoalService(request).list(idObjective)
 
@@ -14,6 +17,8 @@ class GenericView(APIView):
 
 
 class SpecificView(APIView):
+    serializer_class = serializers.GoalSerializer
+
     def get(self, request, idObjective, id, *args, **kwargs):
         return service.GoalService(request).get(idObjective, id)
 

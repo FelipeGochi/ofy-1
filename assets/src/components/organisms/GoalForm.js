@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from "react";
 import { withRouter } from "react-router-dom";
 import { Field, reduxForm } from "redux-form";
-import { convert } from "../../helpers/functions";
+import { convert, isBeforeToday } from "../../helpers/functions";
 import { WithStore } from "../../store";
 import { create, update } from "../../store/actions/GoalAction";
 import { Box, Button, Col, Container, Form, InputText, Paper, Row, Text } from "../atoms";
@@ -39,6 +39,9 @@ const GoalForm = (props) => {
   const [tasksCount, addTasksCount] = useState(1)
 
   const submit = async (values) => {
+
+    if (isBeforeToday(new Date(values.dateGoal)))
+      return;
 
     const data = {
       "idObjective": objective.current.id,
@@ -179,7 +182,7 @@ const GoalForm = (props) => {
                         {`Para um melhor controle, você pode adicionar `}<strong>{"TAREFAS"}</strong>.
                       </Text>
                       <Text align={'center'}>
-                        {"Com elas você da mais atenção aos detalhes e gerência tudo o que tem que ser feito para essa meta ser concluida!"}
+                        {"Com elas você dá mais atenção aos detalhes e gerencia tudo o que tem que ser feito para essa meta ser concluida!"}
                       </Text>
                     </Fragment>}
                 </Box>

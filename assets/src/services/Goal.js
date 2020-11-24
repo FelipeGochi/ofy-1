@@ -2,9 +2,9 @@ import { API_PATH, OBJECTIVE_PATH, GOAL_PATH } from './paths';
 import PrivateService from './Private';
 
 export default class GoalService extends PrivateService {
-  async list(idObjective) {
+  async list(idObjective, page) {
     try {
-      return await this.httpService.get(`${API_PATH}/${OBJECTIVE_PATH}/${idObjective}/${GOAL_PATH}/`, this.headers())
+      return await this.httpService.get(`${API_PATH}/${OBJECTIVE_PATH}/${idObjective}/${GOAL_PATH}/?page=${page}`, this.headers())
     } catch (error) {
       return error.response
     }

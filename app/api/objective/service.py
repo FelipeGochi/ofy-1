@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from api.goal.service import GoalService
 from api.goal.models import Goal
 from rest_framework.response import Response
@@ -19,14 +20,29 @@ class ObjectiveService:
         self.user = User(self.request).get().data['user']
 
     def list(self):
+        page = int(fn.Http(
+            self.request).get_query_param('page'))
+
         objectives = Objective.objects.filter(
-            user__id=self.user['id'], isActive=True)
+            user__id=self.user['id'],
+            isActive=True).order_by('done',
+                                    'dateObjective',
+                                    'objective')
+
+        paginator = Paginator(objectives, 5, allow_empty_first_page=True)
+
+        try:
+            next = paginator.page(page).next_page_number()
+        except:
+            next = 1
 
         objectivesDTO = list(map(lambda objective:
                                  ObjectiveSerializer(objective).data,
-                                 objectives))
+                                 paginator.get_page(page).object_list))
 
         return Response({
+            'count': paginator.count,
+            'next': next,
             'objectives': objectivesDTO
         })
 
@@ -88,7 +104,7 @@ class ObjectiveService:
 
     def __create_objective(self, objective, dateObjective, dificulty):
         try:
-            objective = Objective.objects.create(
+            new_objective = Objective.objects.create(
                 user_id=self.user['id'],
                 objective=objective,
                 dateObjective=dateObjective,
@@ -106,8 +122,11 @@ class ObjectiveService:
                 error['title']
             )
 
+        new_objective.dateObjective = fn.Date(
+            new_objective.dateObjective).parse()
+
         return Response(data={
-            'objective': ObjectiveSerializer(objective).data
+            'objective': ObjectiveSerializer(new_objective).data
         })
 
     def __update_objective(self, id, objective, dateObjective, dificulty):
@@ -131,6 +150,9 @@ class ObjectiveService:
                 error['severity'],
                 error['title']
             )
+
+        objective_old.dateObjective = fn.Date(
+            objective_old.dateObjective).parse()
 
         return Response(data={
             'objective': ObjectiveSerializer(objective_old).data
@@ -160,6 +182,9 @@ class ObjectiveService:
                 error['severity'],
                 error['title']
             )
+
+        objective_old.dateObjective = objective_old.dateObjective.strftime(
+            "%Y/%m/%d")
 
         return Response(data={
             'objective': ObjectiveSerializer(objective_old).data

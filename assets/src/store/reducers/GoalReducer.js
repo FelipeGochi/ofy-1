@@ -12,6 +12,8 @@ const initialState = {
     error: null,
     success: null,
     current: null,
+    page: 1,
+    total: 0,
     list: [],
     currentList: []
 }
@@ -34,7 +36,9 @@ export default (state = initialState, action) => {
                 ...state,
                 list: action.goals,
                 currentList: action.currentList,
-                loading: false
+                page: action.next,
+                total: action.total,
+                loading: false,
             }
         case GOAL_REQUEST_COMPLETE:
             return {

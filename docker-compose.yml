@@ -1,4 +1,4 @@
-version: '3.7'
+version: "3.7"
 
 services:
   djangoapp:
@@ -8,26 +8,10 @@ services:
       - ./app:/usr/src/app
       - static_volume:/usr/src/app/static
       - media_volume:/usr/src/app/media
-    environment:
-      - DEBUG=${DEBUG}
-      - SECRET_KEY=${SECRET_KEY}
-      - DJANGO_ALLOWED_HOSTS=${DJANGO_ALLOWED_HOSTS}
-      - INTERNAL_IPS=${INTERNAL_IPS}
-      - SQL_ENGINE=${SQL_ENGINE}
-      - SQL_DATABASE=${SQL_DATABASE}
-      - SQL_USER=${SQL_USER}
-      - SQL_PASSWORD=${SQL_PASSWORD}
-      - SQL_HOST=${SQL_HOST}
-      - SQL_PORT=${SQL_PORT}
-      - URL_DEFAULT=${URL_DEFAULT}
-      - EMAIL_HOST=${EMAIL_HOST}
-      - EMAIL_PORT=${EMAIL_PORT}
-      - EMAIL_HOST_USER=${EMAIL_HOST_USER}
-      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
-      - EMAIL_USE_TLS=${EMAIL_USE_TLS}
-      - EMAIL_USE_SSL=${EMAIL_USE_SSL}
     expose:
       - 8000
+    env_file:
+      - ./.env
   nginx:
     image: nginx:1.13
     ports:

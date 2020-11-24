@@ -1,3 +1,6 @@
+const STATIC_PATH = '/static'
+const IMAGE_PATH = '/img'
+
 const API_PATH = '/api'
 
 const GOAL_PATH = 'goals'
@@ -23,10 +26,12 @@ export {
     API_PATH,
     GOAL_PATH,
     HEALTH_CHECK_PATH,
+    IMAGE_PATH,
     LOGIN_PATH,
     LOGOUT_PATH,
     OBJECTIVE_PATH,
     SOCIAL_LOGIN_PATH,
+    STATIC_PATH,
     USER_PATH,
     PASSWORD_RECOVERY_PATH,
     VERIFY,
