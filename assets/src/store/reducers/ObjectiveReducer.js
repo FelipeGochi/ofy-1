@@ -23,6 +23,7 @@ export default (state = initialState, action) => {
         case OBJECTIVE_REQUEST:
             return {
                 ...state,
+                action: false,
                 loading: true
             }
         case OBJECTIVE_SET:

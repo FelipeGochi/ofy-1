@@ -1,11 +1,10 @@
 import React, { Fragment, useState } from "react";
 import { withRouter } from "react-router-dom";
 import { Field, reduxForm } from "redux-form";
-import { convert, isBeforeToday } from "../../helpers/functions";
+import { convert, isAfterDate, isBeforeToday } from "../../helpers/functions";
 import { WithStore } from "../../store";
 import { create, update } from "../../store/actions/GoalAction";
-import { Box, Button, Col, Container, Form, InputText, Paper, Row, Text } from "../atoms";
-import { InputDate } from "../atoms/Form/Input";
+import { Box, Button, Circular, Col, Container, Form, InputDate, InputText, Paper, Row, Text } from "../atoms";
 import { AlertWrapper } from "../molecules";
 
 const validate = values => {
@@ -40,7 +39,9 @@ const GoalForm = (props) => {
 
   const submit = async (values) => {
 
-    if (isBeforeToday(new Date(values.dateGoal)))
+    if (isBeforeToday(new Date(values.dateGoal)) ||
+      isAfterDate(new Date(typeof values.dateGoal === String ? values.dateGoal.split('T')[0] : values.dateGoal),
+        new Date(objective.current.dateObjective.split('-'))))
       return;
 
     const data = {
@@ -189,21 +190,23 @@ const GoalForm = (props) => {
               </Paper>
             </Col>
           </Row>
-          <Row>
-            <Col>
-              <Box>
-                <Button
-                  fullWidth
-                  disabled={submitting}
-                  // onClick={() => { history.push('/objective') }}
-                  color="primary"
-                  size="large"
-                >
-                  Salvar
+          {submitting ?
+            <Circular size={50} /> :
+            <Row>
+              <Col>
+                <Box>
+                  <Button
+                    fullWidth
+                    disabled={submitting}
+                    // onClick={() => { history.push('/objective') }}
+                    color="primary"
+                    size="large"
+                  >
+                    Salvar
                 </Button>
-              </Box>
-            </Col>
-          </Row>
+                </Box>
+              </Col>
+            </Row>}
         </Box>
       </Form>
     </Container>

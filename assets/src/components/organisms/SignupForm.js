@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core";
-import React from "react";
+import React, { Fragment } from "react";
 import { reduxForm } from 'redux-form';
-import { Box, Button, Form, InputText } from "../atoms";
+import { Box, Button, Form, FullPage, InputText } from "../atoms";
 import { Field } from 'redux-form'
 
 const useStylesForm = makeStyles((theme) => ({
@@ -44,68 +44,71 @@ const SignupForm = (props) => {
     const { handleSubmit, submitting, error } = props;
 
     return (
-        <Form onSubmit={handleSubmit(props.onSubmit)} className={classes.root} >
-            <Box>
-                <Field
-                    component={InputText}
-                    id="name"
-                    name="name"
-                    label="Nome"
-                    variant="outlined"
-                    fullWidth
-                />
-            </Box>
-            <Box>
-                <Field
-                    component={InputText}
-                    id="lastName"
-                    name="lastName"
-                    label="Sobrenome"
-                    variant="outlined"
-                    fullWidth
-                />
-            </Box>
-            <Box>
-                <Field
-                    component={InputText}
-                    id="username"
-                    name="username"
-                    label="Email"
-                    variant="outlined"
-                    fullWidth
-                />
-            </Box>
-            <Box>
-                <Field
-                    component={InputText}
-                    id="password"
-                    name="password"
-                    label="Senha"
-                    type="password"
-                    variant="outlined"
-                    fullWidth
-                />
-            </Box>
-            <Box>
-                <Field
-                    component={InputText}
-                    id="passwordConfirmation"
-                    name="passwordConfirmation"
-                    label="Confirmação da Senha"
-                    type="password"
-                    variant="outlined"
-                    fullWidth
-                />
-            </Box>
-            <Box>
-                <Button
-                    disabled={submitting}
-                    fullWidth
-                    size="large">
-                    Cadastrar!
+        <Fragment>
+            <FullPage open={submitting} />
+            <Form onSubmit={handleSubmit(props.onSubmit)} className={classes.root} >
+                <Box>
+                    <Field
+                        component={InputText}
+                        id="name"
+                        name="name"
+                        label="Nome"
+                        variant="outlined"
+                        fullWidth
+                    />
+                </Box>
+                <Box>
+                    <Field
+                        component={InputText}
+                        id="lastName"
+                        name="lastName"
+                        label="Sobrenome"
+                        variant="outlined"
+                        fullWidth
+                    />
+                </Box>
+                <Box>
+                    <Field
+                        component={InputText}
+                        id="username"
+                        name="username"
+                        label="Email"
+                        variant="outlined"
+                        fullWidth
+                    />
+                </Box>
+                <Box>
+                    <Field
+                        component={InputText}
+                        id="password"
+                        name="password"
+                        label="Senha"
+                        type="password"
+                        variant="outlined"
+                        fullWidth
+                    />
+                </Box>
+                <Box>
+                    <Field
+                        component={InputText}
+                        id="passwordConfirmation"
+                        name="passwordConfirmation"
+                        label="Confirmação da Senha"
+                        type="password"
+                        variant="outlined"
+                        fullWidth
+                    />
+                </Box>
+                <Box>
+                    <Button
+                        disabled={submitting}
+                        fullWidth
+                        size="large">
+                        Cadastrar!
                 </Button>
-            </Box>
-        </Form >
+                </Box>
+            </Form >
+        </Fragment>
     )
 }
 

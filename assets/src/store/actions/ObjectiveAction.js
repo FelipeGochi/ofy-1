@@ -9,7 +9,6 @@ import {
     OBJECTIVE_REQUEST_ERROR,
     OBJECTIVE_SET,
     OBJECTIVE_LIST_SET,
-    OBJECTIVE_SET_PAGE
 } from "./Actions.type";
 import { setList as setGoalList } from './GoalAction'
 import { setList as setTaskList } from './TaskAction'

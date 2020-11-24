@@ -1,4 +1,4 @@
-import { addDays, format, formatDistance, isBefore, subDays } from 'date-fns'
+import { addDays, format, formatDistance, isAfter, isBefore, subDays } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 
 const locales = { ptBR }
@@ -25,6 +25,10 @@ export const getToday = () => {
 
 export const isBeforeToday = (date) => {
     return isBefore(date, subDays(new Date(), 1))
+}
+
+export const isAfterDate = (date, compareDate) => {
+    return isAfter(date, compareDate)
 }
 
 export const isNull = (item) => item === null

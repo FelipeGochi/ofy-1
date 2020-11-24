@@ -1,7 +1,7 @@
 import { withStyles } from '@material-ui/core';
-import React from 'react';
+import React, { Fragment } from 'react';
 import { AlertWrapper } from '.';
-import { Box, Button, Col, Container, Row, Text } from '../atoms';
+import { Box, Button, Circular, Col, Container, Row, Text } from '../atoms';
 
 const Confirmation = withStyles((theme) => ({
   root: {}
@@ -13,7 +13,8 @@ const Confirmation = withStyles((theme) => ({
   confirmationButton,
   denied,
   deniedButton,
-  target
+  target,
+  loading
 }) => {
   return (
     <Box p={1}>
@@ -38,31 +39,35 @@ const Confirmation = withStyles((theme) => ({
           </Col>
         </Row>
         <Row>
-          <Col lg={6} md={6}>
-            <Box>
-              <Button
-                fullWidth
-                disabled={target.loading}
-                onClick={confirmation}
-                color="primary"
-                size="large"
-              >
-                {confirmationButton}
-              </Button>
-            </Box>
-          </Col>
-          <Col lg={6} md={6}>
-            <Box>
-              <Button
-                fullWidth
-                onClick={denied}
-                color="secondary"
-                size="large"
-              >
-                {deniedButton}
-              </Button>
-            </Box>
-          </Col>
+          {target.loading ?
+            <Circular size={50} /> :
+            <Fragment>
+              <Col lg={6} md={6}>
+                <Box>
+                  <Button
+                    fullWidth
+                    disabled={target.loading}
+                    onClick={confirmation}
+                    color="primary"
+                    size="large"
+                  >
+                    {confirmationButton}
+                  </Button>
+                </Box>
+              </Col>
+              <Col lg={6} md={6}>
+                <Box>
+                  <Button
+                    fullWidth
+                    onClick={denied}
+                    color="secondary"
+                    size="large"
+                  >
+                    {deniedButton}
+                  </Button>
+                </Box>
+              </Col>
+            </Fragment>}
         </Row>
       </Container>
     </Box>

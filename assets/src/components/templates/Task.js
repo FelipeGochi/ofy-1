@@ -4,7 +4,7 @@ import { withRouter } from "react-router-dom";
 import { isEmpty } from "../../helpers/functions";
 import { WithStore } from "../../store";
 import { cleanTaskAlert, done, list, remove } from "../../store/actions/TaskAction";
-import { Box, Button, Col, Container, FloatButton, Icon, ModalFooter, Row, Text } from "../atoms";
+import { Box, Button, Circular, Col, Container, FloatButton, Icon, ModalFooter, Row, Text } from "../atoms";
 import { Accordion, Confirmation } from "../molecules";
 import { TaskForm } from "../organisms";
 
@@ -53,89 +53,92 @@ const Task = (props) => {
     selectedTask,
     id])
 
-  const renderTaskList = () => (
-    <Fragment>
-      <Text component={"h4"}>
-        <strong>{"Tarefas:"}</strong>
-      </Text>
-      {task
-        .list
-        .sort((curr, next) => curr.done - next.done)
-        .map((task, index) => ({
-          title: task.task,
-          id: task.id,
-          done: task.done,
-          children:
-            <Fragment>
-              <Box>
-                <Container>
-                  <Row>
-                    <Col>
-                      <Text>
-                        <strong>
-                          {"Andamento: "}
-                        </strong>
-                        {task.description}
-                      </Text>
-                    </Col>
-                  </Row>
-                </Container>
-                {!task.done &&
+  const renderTaskList = () => task.loading ? <Circular /> :
+    (
+      <Fragment>
+        <Text component={"h4"}>
+          <strong>{"Tarefas:"}</strong>
+        </Text>
+        {task
+          .list
+          .sort((curr, next) => curr.done - next.done)
+          .map((task, index) => ({
+            title: task.task,
+            id: task.id,
+            done: task.done,
+            children:
+              <Fragment>
+                <Box>
                   <Container>
                     <Row>
                       <Col>
-                        <div style={{
-                          display: 'flex',
-                          justifyContent: "flex-start",
-                          alignItems: "center",
-                        }}>
-                          <Box ml={0}>
-                            <Button
-                              fullWidth
-                              color="secondary"
-                              type="button"
-                              className={classes.successButton}
-                              onClick={() => { isTaskDone(true); setSelectedTask(task) }}
-                            >
-                              {"CONCLUIR!"}
-                            </Button>
-                          </Box>
-                          <Box>
-                            <FloatButton
-                              size="small"
-                              color="primary"
-                              aria-label="edit"
-                              onClick={() => { isEditTask(true); setSelectedTask(task) }}>
-                              <Icon>create</Icon>
-                            </FloatButton>
-                          </Box>
-                          <Box>
-                            <FloatButton
-                              size="small"
-                              color="secondary"
-                              aria-label="delete"
-                              onClick={() => { isDropTask(true); setSelectedTask(task) }}>
-                              <Icon>delete</Icon>
-                            </FloatButton>
-                          </Box>
-                        </div>
+                        <Text>
+                          <strong>
+                            {"Andamento: "}
+                          </strong>
+                          {task.description}
+                        </Text>
                       </Col>
                     </Row>
                   </Container>
-                }
-              </Box>
-            </Fragment>
-        }))
-        .map(it =>
-          <Accordion styleHeader={{
-            background: it.done && theme.palette.success.light,
-          }} key={it.id} {...it} />)
-      }
-    </Fragment>)
+                  {!task.done &&
+                    <Container>
+                      <Row>
+                        <Col>
+                          <div style={{
+                            display: 'flex',
+                            justifyContent: "flex-start",
+                            alignItems: "center",
+                          }}>
+                            <Box ml={0}>
+                              <Button
+                                fullWidth
+                                color="secondary"
+                                type="button"
+                                className={classes.successButton}
+                                onClick={() => { isTaskDone(true); setSelectedTask(task) }}
+                              >
+                                {"CONCLUIR!"}
+                              </Button>
+                            </Box>
+                            <Box>
+                              <FloatButton
+                                size="small"
+                                color="primary"
+                                aria-label="edit"
+                                onClick={() => { isEditTask(true); setSelectedTask(task) }}>
+                                <Icon>create</Icon>
+                              </FloatButton>
+                            </Box>
+                            <Box>
+                              <FloatButton
+                                size="small"
+                                color="secondary"
+                                aria-label="delete"
+                                onClick={() => { isDropTask(true); setSelectedTask(task) }}>
+                                <Icon>delete</Icon>
+                              </FloatButton>
+                            </Box>
+                          </div>
+                        </Col>
+                      </Row>
+                    </Container>
+                  }
+                </Box>
+              </Fragment>
+          }))
+          .map(it =>
+            <Accordion styleHeader={{
+              background: it.done && theme.palette.success.light,
+            }} key={it.id} {...it} />)
+        }
+      </Fragment>)
 
   return (
     <Fragment>
-      {isEmpty(task.list) && !goal.done ?
+      {isEmpty(task.list)
+        && !goal.done
+        && !task.loading ?
         <Box>
           <Row>
             <Col>
@@ -152,8 +155,9 @@ const Task = (props) => {
           </Row>
         </Box>
         : renderTaskList()}
-      {!goal.done &&
-        <Row>
+      {!goal.done
+        && !task.loading
+        && <Row>
           <Col>
             <Box m={0} mt={1}>
               <Button

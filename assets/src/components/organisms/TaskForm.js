@@ -1,11 +1,9 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { withRouter } from "react-router-dom";
 import { Field, reduxForm } from "redux-form";
-import { convert } from "../../helpers/functions";
 import { WithStore } from "../../store";
 import { cleanTaskAlert, create, update } from "../../store/actions/TaskAction";
-import { Box, Button, Col, Container, Form, InputText, Paper, Row, Text } from "../atoms";
-import { InputDate } from "../atoms/Form/Input";
+import { Box, Button, Circular, Col, Container, Form, InputText, Row, Text } from "../atoms";
 import { AlertWrapper } from "../molecules";
 
 const validate = values => {
@@ -102,20 +100,22 @@ const TaskForm = (props) => {
               </Box>
             </Col>
           </Row>
-          <Row>
-            <Col>
-              <Box>
-                <Button
-                  fullWidth
-                  disabled={submitting}
-                  color="primary"
-                  size="large"
-                >
-                  Salvar
+          {submitting ?
+            <Circular size={50} /> :
+            <Row>
+              <Col>
+                <Box>
+                  <Button
+                    fullWidth
+                    disabled={submitting}
+                    color="primary"
+                    size="large"
+                  >
+                    Salvar
                 </Button>
-              </Box>
-            </Col>
-          </Row>
+                </Box>
+              </Col>
+            </Row>}
         </Box>
       </Form>
     </Container>

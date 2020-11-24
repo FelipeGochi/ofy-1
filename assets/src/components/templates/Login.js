@@ -43,7 +43,7 @@ const Login = (props) => {
 
     return (
         <Container fixed={true} className={classes.root}>
-            <Image name={"logo"} alt={"Objectivefy - OFY"} style={{marginTop: "-90px", marginBottom: "-60px"}} />
+            <Image name={"logo"} alt={"Objectivefy - OFY"} style={{ marginTop: "-90px", marginBottom: "-60px" }} />
             <AlertWrapper data={auth} />
             <Row className={classes.form}>
                 <Col>

@@ -1,8 +1,7 @@
 import { makeStyles } from "@material-ui/core";
-import React from "react";
-import { reduxForm } from 'redux-form';
-import { Box, Button, Col, Divider, Form, InputText } from "../atoms";
-import { Field } from 'redux-form'
+import React, { Fragment } from "react";
+import { Field, reduxForm } from 'redux-form';
+import { Box, Button, Form, FullPage, InputText } from "../atoms";
 
 
 const useStylesForm = makeStyles((theme) => ({
@@ -36,26 +35,29 @@ const PasswordRecoveryForm = (props) => {
     const { handleSubmit, submitting, error } = props;
 
     return (
-        <Form onSubmit={handleSubmit(props.onSubmit)} className={classes.root} >
-            <Box>
-                <Field
-                    component={InputText}
-                    id="email"
-                    name="email"
-                    label="Email"
-                    variant="outlined"
-                    fullWidth
-                />
-            </Box>
-            <Box>
-                <Button
-                    disabled={submitting}
-                    fullWidth
-                    size="large">
-                    Enviar Email
+        <Fragment>
+            <FullPage open={submitting} />
+            <Form onSubmit={handleSubmit(props.onSubmit)} className={classes.root} >
+                <Box>
+                    <Field
+                        component={InputText}
+                        id="email"
+                        name="email"
+                        label="Email"
+                        variant="outlined"
+                        fullWidth
+                    />
+                </Box>
+                <Box>
+                    <Button
+                        disabled={submitting}
+                        fullWidth
+                        size="large">
+                        Enviar Email
                 </Button>
-            </Box>
-        </Form >
+                </Box>
+            </Form >
+        </Fragment>
     )
 }
 

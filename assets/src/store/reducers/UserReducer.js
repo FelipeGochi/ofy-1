@@ -15,6 +15,7 @@ export default (state = initialState, action) => {
         case USER_REQUEST:
             return {
                 ...state,
+                ...action,
                 loading: true
             }
         case USER_SET:
@@ -24,6 +25,7 @@ export default (state = initialState, action) => {
                 email: action.email,
                 firstName: action.firstName,
                 lastName: action.lastName,
+                loading: false,
             }
         case USER_REQUEST_COMPLETE:
             return {

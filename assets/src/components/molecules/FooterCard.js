@@ -1,6 +1,6 @@
 import { Slide, useMediaQuery, useTheme, withStyles } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
-import { Box, Paper } from '../atoms';
+import { Box, Circular, Paper } from '../atoms';
 
 const FooterCard = withStyles((theme) => ({
     default: {

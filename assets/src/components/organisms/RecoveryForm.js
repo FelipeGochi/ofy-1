@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core";
-import React from "react";
+import React, { Fragment } from "react";
 import { reduxForm } from 'redux-form';
-import { Box, Button, Col, Divider, Form, InputText } from "../atoms";
+import { Box, Button, Col, Divider, Form, FullPage, InputText } from "../atoms";
 import { Field } from 'redux-form'
 
 
@@ -40,38 +40,41 @@ const RecoveryForm = (props) => {
     const { handleSubmit, submitting, error } = props;
 
     return (
-        <Form onSubmit={handleSubmit(props.onSubmit)} className={classes.root} >
-            <Box>
-                <Field
-                    component={InputText}
-                    id="password"
-                    name="password"
-                    label="Senha"
-                    variant="outlined" 
-                    type="password"
-                    fullWidth
-                />
-            </Box>
-            <Box>
-                <Field
-                    component={InputText}
-                    id="passwordConfirmation"
-                    name="passwordConfirmation"
-                    label="Confirmação da Senha"
-                    variant="outlined" 
-                    type="password"
-                    fullWidth
-                />
-            </Box>
-            <Box>
-                <Button
-                    disabled={submitting}
-                    fullWidth
-                    size="large">
-                    Atualizar Senha
+        <Fragment>
+            <FullPage open={submitting} />
+            <Form onSubmit={handleSubmit(props.onSubmit)} className={classes.root} >
+                <Box>
+                    <Field
+                        component={InputText}
+                        id="password"
+                        name="password"
+                        label="Senha"
+                        variant="outlined"
+                        type="password"
+                        fullWidth
+                    />
+                </Box>
+                <Box>
+                    <Field
+                        component={InputText}
+                        id="passwordConfirmation"
+                        name="passwordConfirmation"
+                        label="Confirmação da Senha"
+                        variant="outlined"
+                        type="password"
+                        fullWidth
+                    />
+                </Box>
+                <Box>
+                    <Button
+                        disabled={submitting}
+                        fullWidth
+                        size="large">
+                        Atualizar Senha
                 </Button>
-            </Box>
-        </Form >
+                </Box>
+            </Form >
+        </Fragment>
     )
 }
 

@@ -4,7 +4,7 @@ import { withRouter } from "react-router-dom";
 import { convert, isBeforeToday, isEmpty, isEquals, isNull, lazyLoadScrollChecker } from "../../helpers/functions";
 import { WithStore } from "../../store";
 import { cleanGoalAlert, done, list, remove } from "../../store/actions/GoalAction";
-import { Box, Button, Chip, Col, Container, FloatButton, Icon, ModalFooter, Paper, Row, Text } from "../atoms";
+import { Box, Button, Chip, Circular, Col, Container, FloatButton, Icon, ModalFooter, Paper, Row, Text } from "../atoms";
 import { Confirmation } from "../molecules";
 import { GoalForm } from "../organisms";
 import Task from "./Task";
@@ -71,8 +71,11 @@ const Goal = (props) => {
   }
 
   const renderButton = () =>
-    objective.current && !objective.current.done && (
-      < Box >
+    !goal.loading
+    && objective.current
+    && !objective.current.done
+    && (
+      <Box>
         <Button
           fullWidth
           onClick={() => { isCreateGoal(true) }}
@@ -88,7 +91,7 @@ const Goal = (props) => {
 
   return (
     <Fragment>
-      {isEmpty(goal.list) ?
+      {isEmpty(goal.list) && !goal.loading ?
         <Box>
           <Row>
             <Col>
@@ -233,6 +236,7 @@ const Goal = (props) => {
                   </Box>
                 </Paper>
               </Box>))}
+          {goal.loading && <Circular />}
         </Fragment>}
 
       <ModalFooter

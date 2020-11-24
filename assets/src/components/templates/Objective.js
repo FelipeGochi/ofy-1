@@ -5,7 +5,7 @@ import { convert, daysFromToday, getDifficulty, isNull } from "../../helpers/fun
 import { WithStore } from "../../store";
 import { list } from "../../store/actions/GoalAction";
 import { cleanObjectiveAlert, done, getObjective, remove } from "../../store/actions/ObjectiveAction";
-import { Box, Button, Col, Container, FloatButton, Icon, ModalFooter, Paper, Row, Text } from "../atoms";
+import { Box, Button, Col, Container, Fill, FloatButton, Icon, ModalFooter, Paper, Row, Text } from "../atoms";
 import { Confirmation, FooterCard } from "../molecules";
 import { ObjectiveForm } from "../organisms";
 import Goal from "./Goal";
@@ -70,9 +70,11 @@ const Objective = (props) => {
           {labels.text}
         </Text>
         <Text variant="h4" component="h2">
-          <strong>
-            {labels.date}
-          </strong>
+          {objective.loading ?
+            <Fill width={"250px"} /> :
+            <strong>
+              {labels.date}
+            </strong>}
         </Text>
       </Fragment>
     )
@@ -115,9 +117,12 @@ const Objective = (props) => {
                     {"Seu Objetivo é"}
                   </Text>
                   <Text variant="h2" component="h2">
-                    <strong>
-                      {current.objective}
-                    </strong>
+                    {objective.loading ?
+                      <Fill width={"250px"} /> :
+                      <strong>
+                        {current.objective}
+                      </strong>
+                    }
                   </Text>
                 </div>
                 {current && !current.done &&
@@ -153,9 +158,12 @@ const Objective = (props) => {
                       {"Você concluiu ele dia"}
                     </Text>
                     <Text variant="h4" component="h2">
-                      <strong>
-                        {convert(new Date(current.updated))}
-                      </strong>
+                      {objective.loading ?
+                        <Fill width={"250px"} /> :
+                        <strong>
+                          {convert(new Date(current.updated))}
+                        </strong>
+                      }
                     </Text>
                   </Box>
                 </Paper>
@@ -169,9 +177,11 @@ const Objective = (props) => {
                       {"Você quer conclui-ló até dia"}
                     </Text>
                     <Text variant="h4" component="h2">
-                      <strong>
-                        {convert(new Date(current.dateObjective.split('-')))}
-                      </strong>
+                      {objective.loading ?
+                        <Fill width={"250px"} /> :
+                        <strong>
+                          {convert(new Date(current.dateObjective.split('-')))}
+                        </strong>}
                     </Text>
                   </Box>
                 </Paper>

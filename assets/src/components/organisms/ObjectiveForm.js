@@ -5,8 +5,8 @@ import { Field, formValueSelector, reduxForm } from "redux-form";
 import { convert, getDifficulty, isBeforeToday, lessThenDays } from "../../helpers/functions";
 import { WithStore } from "../../store";
 import { create, update } from "../../store/actions/ObjectiveAction";
-import { Box, Button, Col, Container, Form, InputText, Row, Text } from "../atoms";
-import { InputDate } from "../atoms/Form/Input";
+import { Box, Button, Circular, Col, Container, Form, InputText, Row, Text } from "../atoms";
+import { InputDate } from "../atoms";
 import { AlertWrapper } from "../molecules";
 
 const validate = values => {
@@ -106,21 +106,23 @@ const ObjectiveForm = (props) => {
               </Box>
             </Col>
           </Row>
-          <Row>
-            <Col>
-              <Box>
-                <Button
-                  fullWidth
-                  disabled={submitting}
-                  // onClick={() => { history.push('/objective') }}
-                  color="primary"
-                  size="large"
-                >
-                  Salvar
+          {objective.loading ?
+            <Circular size={50} /> :
+            <Row>
+              <Col>
+                <Box>
+                  <Button
+                    fullWidth
+                    disabled={submitting}
+                    // onClick={() => { history.push('/objective') }}
+                    color="primary"
+                    size="large"
+                  >
+                    Salvar
                 </Button>
-              </Box>
-            </Col>
-          </Row>
+                </Box>
+              </Col>
+            </Row>}
         </Box>
       </Form>
     </Container>

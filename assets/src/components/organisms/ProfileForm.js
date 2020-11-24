@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/core";
 import React, { Fragment, useState } from "react";
 import { reduxForm } from 'redux-form';
-import { Box, Button, Col, Form, InputText, Row } from "../atoms";
+import { Box, Button, Circular, Col, Form, InputText, Row } from "../atoms";
 import { Field } from 'redux-form'
 
 const useStylesForm = makeStyles((theme) => ({
@@ -37,6 +37,7 @@ const ProfileForm = (props) => {
   const { handleSubmit, submitting, error, onCancel, openEdit, edit } = props;
 
   const renderButtons = () => {
+    if (submitting) return <Circular />
     if (edit)
       return (
         <Row>
@@ -139,7 +140,7 @@ const ProfileForm = (props) => {
         </Box>
       </Col>
       <Col xs={12}>
-        {renderButtons(edit)}
+        {renderButtons()}
       </Col>
     </Form >
   )

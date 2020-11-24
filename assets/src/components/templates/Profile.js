@@ -1,7 +1,7 @@
 import { makeStyles, useMediaQuery, useTheme } from "@material-ui/core";
 import React, { Fragment, useEffect, useState } from "react";
 import { withRouter } from "react-router-dom";
-import { Box, Button, Col, Container, Paper, Row, Text } from "../atoms";
+import { Box, Button, Col, Container, Fill, Paper, Row, Text } from "../atoms";
 import { Accordion, AlertWrapper } from "../molecules";
 import { AvatarForm, ProfileForm } from "../organisms";
 import { WithStore } from "../../store";
@@ -108,12 +108,16 @@ const Profile = (props) => {
           <Box>
             <AvatarForm user={user} onSubmit={handleAvatarFormSubmit} />
             <Text align={'center'} variant="h3" component="h2">
-              <strong>
-                {user.firstName} {user.lastName}
-              </strong>
+              {user.loading ?
+                <Row>
+                  <Fill width={"250px"} />
+                </Row>
+                : <strong>
+                  {user.firstName} {user.lastName}
+                </strong>}
             </Text>
             <Text align={'center'}>
-              {user.email}
+              {user.loading ? <Row><Fill width={"250px"} /></Row> : user.email}
             </Text>
           </Box>
           <div>
