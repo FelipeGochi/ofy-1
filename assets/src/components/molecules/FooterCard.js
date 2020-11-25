@@ -32,7 +32,7 @@ const FooterCard = withStyles((theme) => ({
     useEffect(() => {
         setIsDesktop(matches)
 
-        if (document.getElementById("box-footer-card").offsetHeight > document.body.offsetHeight - 100)
+        if (document.getElementById("box-footer-card").offsetHeight > document.body.offsetHeight)
             isBigList(true)
 
     }, [matches, children])

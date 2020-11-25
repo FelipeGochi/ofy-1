@@ -61,7 +61,7 @@ const Goal = (props) => {
 
   const handleInfinitScroll = () => {
     if (window.innerHeight + document.documentElement.scrollTop <
-      document.documentElement.scrollHeight) {
+      document.documentElement.scrollHeight - 50) {
       return;
     }
 
