@@ -25,8 +25,6 @@ const Home = (props) => {
   }, [])
 
   const handleInfinitScroll = () => {
-    console.log(window.innerHeight, document.documentElement.scrollTop,
-      document.documentElement.scrollHeight)
     if (window.innerHeight + document.documentElement.scrollTop <
       document.documentElement.scrollHeight - 50) {
       return;
