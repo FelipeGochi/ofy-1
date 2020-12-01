@@ -193,5 +193,3 @@ EMAIL_USE_TLS = int(os.environ.get('EMAIL_USE_TLS', default=0))
 EMAIL_USE_SSL = int(os.environ.get('EMAIL_USE_SSL', default=1))
 
 DATE_FORMAT = "dd/MM/YYYY"
-
-SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
