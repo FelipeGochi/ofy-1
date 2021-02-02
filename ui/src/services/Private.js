@@ -2,6 +2,7 @@ import axios from 'axios'
 
 export default class PrivateService {
   constructor() {
+    // TODO (adicionar apenas quando for para produção. Verificar como saber se estamos em produção.)
     axios.defaults.baseURL = 'http://objectivefy.com'
     this.httpService = axios;
   }

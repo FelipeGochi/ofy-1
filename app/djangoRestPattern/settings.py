@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'oauth2_provider',
     'social_django',
     'rest_framework_social_oauth2',
+    'corsheaders',
     'api',
     'authentication'
 ]
@@ -57,6 +58,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',

@@ -8,3 +8,4 @@ django-webpack-loader
 gunicorn 
 python-dotenv
 django-rest-framework-social-oauth2
+django-cors-headers
