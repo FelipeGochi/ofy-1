@@ -18,14 +18,14 @@ const routers = [
 ]
 
 const RouterPublic = () => {
-    const local = window.location.pathname.split('/app')[1]
+    const local = window.location.pathname.split('/')[1]
 
     if (local !== '/' && !window.location.search && !routers.find(route => local.includes(route.name))) {
-        window.location.replace(`/app?next=${local}`)
+        window.location.replace(`/?next=${local}`)
     }
 
     return (
-        <BrowserRouter basename={"/app"}>
+        <BrowserRouter>
             <Switch>
                 {routers.map(router => (
                     <Route exact key={router.name} path={router.path}>

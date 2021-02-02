@@ -20,11 +20,11 @@ const Router = () => {
     if (window.location.search) {
         const urlParams = new URLSearchParams(window.location.search);
         const next = urlParams.get('next');
-        window.location.replace(`/app/${next.replace('/', '')}`)
+        window.location.replace(`/${next.replace('/', '')}`)
     }
 
     return (
-        <BrowserRouter basename={"/app"}>
+        <BrowserRouter>
             <Crust>
                 <Switch>
                     {routers.map(router => (
