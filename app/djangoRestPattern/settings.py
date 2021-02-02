@@ -61,20 +61,18 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'corsheaders.middleware.CorsPostCsrfMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    "https://objectivefy.com",
-    "https://app.objectivefy.com",
-    "http://objectivefy.com",
-    "http://app.objectivefy.com",
-]
+CORS_ORIGIN_ALLOW_ALL = False
 
-if DEBUG:
-    CORS_ALLOWED_ORIGINS += ["http://localhost:3000", "http://127.0.0.1:8000"]
+CORS_ORIGIN_WHITELIST = (
+    'http://localhost:3000',
+    'http://localhost',
+) if DEBUG == 1 else ('https://app.objectivefy.com')
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (

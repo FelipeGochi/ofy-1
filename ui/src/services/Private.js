@@ -3,7 +3,11 @@ import axios from 'axios'
 export default class PrivateService {
   constructor() {
     // TODO (adicionar apenas quando for para produção. Verificar como saber se estamos em produção.)
-    axios.defaults.baseURL = 'http://objectivefy.com'
+    if (process.env.NODE_ENV === 'production')
+      axios.defaults.baseURL = 'http://objectivefy.com'
+    else
+      axios.defaults.baseURL = 'http://127.0.0.1:8000'
+
     this.httpService = axios;
   }
 
