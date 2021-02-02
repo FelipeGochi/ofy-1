@@ -1,9 +1,9 @@
 import React from 'react';
-import { STATIC_PATH, IMAGE_PATH } from '../../../services/paths';
+import { IMAGE_PATH } from '../../../services/paths';
 
 const Image = (props) => (
     <img
-        src={`${STATIC_PATH}${IMAGE_PATH}/${props.name}${props.extension || '.png'}`}
+        src={`${IMAGE_PATH}/${props.name}${props.extension || '.png'}`}
         alt={props.alt}
         className={props.className}
         style={{
