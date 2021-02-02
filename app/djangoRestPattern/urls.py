@@ -29,10 +29,6 @@ API_URL = 'api'
 
 urlpatterns = [
     # VIEWS URLs
-    path('app/', TemplateView.as_view(template_name='client/index.html')),
-    re_path(r'app/(?:.*)$',
-            TemplateView.as_view(template_name='client/index.html')),
-
     path('', TemplateView.as_view(template_name='server/index.html')),
 
     # AUTH APIs
