@@ -1,40 +1,9 @@
 {
     "routes": [
         {
-            "route": "/",
+            "route": "/*",
             "serve": "/index.html",
             "statusCode": 200
-        },
-        {
-            "route": "/profile/*",
-            "serve": "/index.html",
-            "statusCode": 200
-        },
-        {
-            "route": "/objective/*",
-            "serve": "/index.html",
-            "statusCode": 200
-        },
-        {
-            "route": "/signup/*",
-            "serve": "/index.html",
-            "statusCode": 200
-        },
-        {
-            "route": "/password-recovery/*",
-            "serve": "/index.html",
-            "statusCode": 200
-        },
-        {
-            "route": "/recovery/*",
-            "serve": "/index.html",
-            "statusCode": 200
-        },
-        {
-            "route": "/api/*",
-            "allowedRoles": [
-                "anonymous"
-            ]
-        },
+        }
     ]
 }

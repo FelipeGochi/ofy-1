@@ -2,6 +2,7 @@ import axios from 'axios'
 
 export default class PrivateService {
   constructor() {
+    axios.defaults.baseURL = 'http://objectivefy.com'
     this.httpService = axios;
   }
 
