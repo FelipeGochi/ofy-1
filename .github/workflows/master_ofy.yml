@@ -34,3 +34,4 @@ jobs:
         app-name: 'ofy'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_8d8ce7cccd4647a981720a0625595f34 }}
+        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
