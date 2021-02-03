@@ -2,6 +2,8 @@
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
 name: Build and deploy Python app to Azure Web App - ofy
+env:
+  AZURE_WEBAPP_PACKAGE_PATH: './app' 
 
 on:
   push:
