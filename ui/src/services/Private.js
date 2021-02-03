@@ -33,7 +33,8 @@ export default class PrivateService {
   headers() {
     return {
       headers: {
-        Authorization: `Bearer ${this.getToken()}`
+        Authorization: `Bearer ${this.getToken()}`,
+        'Access-Control-Allow-Origin': '*'
       }
     }
   }
