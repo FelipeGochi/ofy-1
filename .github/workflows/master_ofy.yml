@@ -3,7 +3,7 @@
 
 name: Build and deploy Python app to Azure Web App - ofy
 env:
-  AZURE_WEBAPP_PACKAGE_PATH: './app' 
+  AZURE_WEBAPP_PACKAGE_PATH: 'app' 
 
 on:
   push:
