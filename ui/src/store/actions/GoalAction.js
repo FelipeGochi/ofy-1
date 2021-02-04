@@ -55,7 +55,7 @@ const requestError = (error) => ({
 
 export const list = (idObjective) => {
     return async (dispatch, getState) => {
-        const isSameObjective = getState().objective.current.id === idObjective
+        const isSameObjective = getState().objective.current.id === parseInt(idObjective)
 
         if (isNotEmpty(getState().goal.list)
             && getState().goal.list.length === getState().goal.total
